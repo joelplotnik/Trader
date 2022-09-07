@@ -12,15 +12,17 @@
                                                      class: "btn btn-success", method: :post %>
     <% else %>
       <span class="badge badge-secondary">
-        You are already tracking
-        <% if !current_user.under_stock_limit? %>
-          10 stocks
-        <% end %>
-        <% if current_user.stock_already_tracked?(@stock.ticker) %>
-          this stick
+        <% if !current_user.under_stock_limit? && current_user.stock_already_tracked?(@stock.ticker)%>
+          You are already tracking 10 stocks
+        <% else %>
+          <% if !current_user.under_stock_limit? %>
+            You are already tracking 10 stocks
+          <% end %>
+            <% if current_user.stock_already_tracked?(@stock.ticker) %>
+            You are already tracking this stock
+          <% end %>
         <% end %>
       </span>
     <% end %>
-
   </div>
 <% end %>
