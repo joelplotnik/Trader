@@ -3,7 +3,12 @@ class UserStocksController < ApplicationController
     stock = Stock.check_db(params[:ticker])
     if stock.blank?
       stock = Stock.new_lookup(params[:ticker])
-      stock.save
+      if stock.name?
+        stock.save
+      else
+        stock.name = "n\\a"
+        stock.save
+      end
     end
     @user_stock = UserStock.create(user: current_user, stock: stock)
     flash[:notice] = "Stock #{stock.name} was successfully added to your portfolio"
